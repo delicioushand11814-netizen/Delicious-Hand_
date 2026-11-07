@@ -665,7 +665,7 @@ var DEFAULT_SETTINGS = { shopName: "Delicious Hand", address: "", phone: "829816
 var ORDER_STEPS = ["new", "preparing", "ready", "done"];
 
 var $ = function (id) { return document.getElementById(id); };
-function rupee(n) { return "₹" + Math.round(Number(n) || 0).toLocaleString("en-IN"); }
+function rupee(n) { return "?" + Math.round(Number(n) || 0).toLocaleString("en-IN"); }
 function digitsOf(s) { return String(s || "").replace(/\D/g, ""); }
 function phoneDigits(s) { var d = digitsOf(s); if (d.length === 12 && d.indexOf("91") === 0) d = d.slice(2); return d; }
 function telHref(s) { var d = digitsOf(s); if (d.length === 10) d = "91" + d; return "tel:+" + d; }
@@ -1060,12 +1060,12 @@ function stepsHtml(status, type) {
   var cur = ORDER_STEPS.indexOf(status || "new"); if (cur < 0) cur = 0;
   return ORDER_STEPS.map(function (k, i) {
     var cls = i < cur ? "done" : i === cur ? "now" : "";
-    return '<li class="' + cls + '"><i>' + (i < cur ? "?" : i + 1) + "</i><span>" + esc(stepLabel(k, type)) + "</span></li>";
+    return '<li class="' + cls + '"><i>' + (i < cur ? "✓" : i + 1) + "</i><span>" + esc(stepLabel(k, type)) + "</span></li>";
   }).join("");
 }
 function setTick(kind) {
   var el = $("tick"); el.className = "tick" + (kind ? " " + kind : "");
-  el.textContent = kind === "ok" ? "?" : kind === "bad" ? "!" : "…";
+  el.textContent = kind === "ok" ? "✓" : kind === "bad" ? "!" : "…";
 }
 function showResult() {
   var o = state.order, ok = state.saved || state.emailed;
